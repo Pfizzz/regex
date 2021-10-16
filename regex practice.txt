@@ -14,32 +14,57 @@ Meta characters:
 
 Quantifiers:
 
-* = 0 or more
+* = 0 or more. Greedy quantifier
 + = 1 or more
 ? = 0 or 1 (optional)
 {min, max}
 {n}
+\[.* = match a bracket followed by anything (example)
+\[.*?\] = stops the * from being greedy.
+? can change a quantifier to make it not greedy.
 
 Position:
 ^ = beginning
 $ = end
 \b = word boundary 
+------------------------
 
 Character classes:
 [abc] = match an "a" OR a "b" OR a "c"
 [-.] = dot becomes a literal dot (no longer meta character in a class).
+[^0-5] = anything EXCEPT 0-5. the ^ is a special character.
+[a^bc] = match "a" OR "^" or "b" or "c" (^ becomes a literal in second slot)
+[A-Za-z] = only characters
 
+------------------------
+
+Alternation:
+(net | edu) = search net or edu (similar to js)
+[\w.]+@\w+\.(net|com|edu) = selects all thes email addresses:
+
+mikepfizz@gmail.com
+mike.pfizz@hotmail.net
+mikepfizz@rowan.edu
+
+[\w.]+@\w+\.(net|com|edu) = 
+"Search any number of word characters or a dot, 
+followed by an @ symbol,
+followed by any number of word characters,
+followed by a literal dot,
+followed by net, com, or edu."
+
+------------------------
 PHONE NUMBER EXERCISE:
 How to select different phone numbers:
 
 201-555-6789 = \d{3}-\d{3}-\d{4}
 646.555.1234 = d{3}[.-]\d{3}[.-]\d{4}
-(212)867-5309 = [(]\d{3}[)][.-]\d{3}[.-]\d{4}
+(212)867-5309 = \(?\d{3}[-.)]\d{3}[-.]\d{4}
 
 to select all of them at once:
 
 \(?\d{3}[-.)]\d{3}[-.]\d{4}
-(the order of the -.) in the class is important)
+(the order of the -.) in the class is important, - is a special char)
 \(? = the ( is optional.
 THIS TRANSLATES TO:
 "I would like to match a literal open parenthesis optionally, 
@@ -48,6 +73,107 @@ followed by a dash or a period or a closed parenthesis,
 followed by tree digits,
 followed by a dash or a period,
 followed by four digits."
+
+------------------------
+
+Capturing Groups:
+
+() can be used to capture groups.
+
+\d{3}-(\d{3})-(\d{4})
+the entire group is group 0
+the first captured group () is group 1
+the second captured group () is group 2
+
+$1 = refers to group 1 in a replace
+/1 refers to group 1 within the regex itself.
+
+To replace everything after an area code with XXX-XXXX:
+in replace (ctrl+h):
+
+\(?(\d{3})[-.)]\d{3}[-.]\d{4}
+note the () surrounding the area code
+replace with:
+$1-XXX-XXXX
+
+example (use replace):
+201-790-1234 turns into
+201-XXX-XXXX
+
+to swap first and last names:
+
+Pfister, Michael
+Fishman, Michael
+Fiddler, Mikey
+
+Search :
+(\w+),\s+(\w+)
+(CAPTURE any number of word chars, 
+then a comma, 
+then a space of any length, 
+then CAPTURE any number of word chars)
+
+and replace with:
+$2 $1
+(the first name, space, the last name)
+
+Translate markdown to html:
+
+[Google](http://google.com)
+[itp](http://itp.nyu.edu)
+[Coding Raindbow](http://codingrainbow.com)
+
+[Coding Raindbow](http://codingrainbow.com) [test] (.*? keeps from greedy)
+
+match
+\[(.*?)\]\((.*?)\)
+"literal bracket, 
+followed by anything (captured name group1) until closed literal bracket,
+followed by literal open parenthesis, 
+followed by anything (captured URL group2) until literal closed parenthesis"
+
+replace with:
+<a href="$2">$1</a>
+"take the markdown syntax,
+capture the title and the URL,
+and replace it with the html format"
+
+[Google](http://google.com)
+turns into:
+<a href="http://google.com">Google</a>
+[itp](http://itp.nyu.edu)
+turns into:
+<a href="http://itp.nyu.edu">itp</a>
+[Coding Raindbow](http://codingrainbow.com)
+turns into:
+<a href="http://codingrainbow.com">Coding Raindbow</a>
+------------------------
+BACK REFERENCES:
+
+use \1 to refer to the captured group in the regular expression itself
+
+------------------------
+PHONE NUMBER EXERCISE:
+How to select different phone numbers:
+
+201-555-6789 = \d{3}-\d{3}-\d{4}
+646.555.1234 = d{3}[.-]\d{3}[.-]\d{4}
+(212)867-5309 = \(?\d{3}[-.)]\d{3}[-.]\d{4}
+
+to select all of them at once:
+
+\(?\d{3}[-.)]\d{3}[-.]\d{4}
+(the order of the -.) in the class is important, - is a special char)
+\(? = the ( is optional.
+THIS TRANSLATES TO:
+"I would like to match a literal open parenthesis optionally, 
+followed by three digits,
+followed by a dash or a period or a closed parenthesis,
+followed by tree digits,
+followed by a dash or a period,
+followed by four digits."
+
+------------------------
 
 examples (refer to meta characters and qualifiers)
 \w+ = find one or more word characters in a row
@@ -59,6 +185,8 @@ examples (refer to meta characters and qualifiers)
 \b\w{4,6}\b = match all words between 4-6 word characters
 l[yi]nk = match l +y or i + nk (using character class yi)
 l[yi (]nk = mat l +y or i or space or ( +nk
+\b[A-Za-z]{4}\b = match any 4-letter words only with characters in them.
+\b[A-Z][a-z]*\b = match only capital words (must have match case enabled)
 
 
 the colors of the rainbow have many colours and the rainbow does not 
