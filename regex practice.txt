@@ -1,0 +1,57 @@
+regex practice
+
+Meta characters:
+
+\d = 0-9
+\w = A-Za-z0-9
+\s = any white spcae, tab
+. = matches any character whatsoever
+\W = anything thats NOT a word character
+\S = anything thats NOT a spcae
+\D = anything thats not 0-9
+
+Quantifiers:
+
+* = 0 or more
++ = 1 or more
+? = 0 or 1 (optional)
+{min, max}
+{n}
+
+Position:
+^ = beginning
+$ = end
+\b = word boundary 
+
+CHaracter classes:
+[abc] = match an "a" or a "b" or a "c"
+
+201-555-6789 = \d{3}-\d{3}-\d{4}
+646.555.1234
+(212)867-5309
+
+
+the colors of the rainbow have many colours and the rainbow does not 
+have a single colour. 
+
+searching colou?rs? searches for colo +an optional u +r + an optional s.
+
+
+examples (refer to meta characters and qualifiers)
+\w+ = find one or more word characters in a row
+\w\d+ = find a word character followed by one or more digits.
+^\w+ = the beginning of a line, followed by one or more word characters
+\w+$ = word characters at the end of a line
+^\w+$ = match beginning of line followed by any sequence of word characters then end of line (single word)
+\b\w{4}\b = beginning of a word, 4 characters, end of word (4-letter word)
+\b\w{4,6}\b = match all words between 4-6 word characters
+
+This is something
+is about
+a blah
+single
+words
+sequence of words
+Hello
+Goodbye and
+Go go go rainbow!
