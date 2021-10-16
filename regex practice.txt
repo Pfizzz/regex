@@ -152,6 +152,16 @@ BACK REFERENCES:
 
 use \1 to refer to the captured group in the regular expression itself
 
+to check if a word appears twice in a row:
+
+(\b\w+\b)\s\1
+"capture a complete word,
+then a space,
+then that first group of characters (the word)"
+(\w+)\s\1\s\1
+" then a space then that group again."
+
+then then then I ate then I ate ate this is 
 ------------------------
 PHONE NUMBER EXERCISE:
 How to select different phone numbers:
