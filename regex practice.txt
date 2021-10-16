@@ -257,3 +257,30 @@ r.test("123ABC");
 "the ^ beginning of the string,
 followed by three digits,
 followed by the end $ of the string"
+
+match()
+
+var s = "unicorns and puppies and stuff";
+undefined
+var r = /unicorn/;
+undefined
+s.match(r);
+['unicorn', index: 0, input: 'unicorns and puppies and stuff', groups: undefined]
+r.test(s);
+true
+
+match actually prints the thing it's matching.
+ ====================================
+FLAGS: a way of modifying the behavior of a regex
+
+g = global = dont just match the first thing, match all of them
+i = case insensitive
+
+example:
+var r = /[a-z]+/g;
+flag goes after the regex
+s.match(r);
+(5) ['unicorns', 'and', 'puppies', 'and', 'stuff']
+get array of every single match of that regex, not just the first
+
+10:46
