@@ -161,7 +161,9 @@ then that first group of characters (the word)"
 (\w+)\s\1\s\1
 " then a space then that group again."
 
-then then then I ate then I ate ate this is 
+\b(\w+)\s\1\b also works. lots of different ways.
+
+then then then I ate then I ate ate this is i i i 
 ------------------------
 PHONE NUMBER EXERCISE:
 How to select different phone numbers:
@@ -216,3 +218,42 @@ Goodbye and
 Go go go rainbow!
 
 The lynk is quite a link you think? l nk link lynk l(nk lyink (will not show)
+
++++++++++++++++++++++++++++++++++++++++++++++
+REGEX IN JAVASCRIPT (video 2.6)
+https://www.youtube.com/watch?v=W7S_Vmq0GSs
+
+to write regex in javascript:
+
+var s = "hello" ==javascript string object
+var r = /hello/ ==regex syntax
+new String("__") ==js
+new RegExp("__") (if you wanted to take string input from a user and turn it into a 
+                    regex, you need to do it this way)
+
+s.length = js
+
+r.test() = a function you can call on a regular expression (r)
+s.match(regex) = a fucntion you call on a string that passes in a regex
+
+writing regex in js:
+in console:
+var r = /\d{3}/;
+//undefined
+r.test("hello");
+//false
+r.test("123");
+//true
+r.test("123ABC");
+//true (there are three digits)
+
+var r = /^\d{3}$/;
+//undefined
+r.test("123");
+//true
+r.test("123ABC");
+//false (there are more than 3 digits)
+
+"the ^ beginning of the string,
+followed by three digits,
+followed by the end $ of the string"
