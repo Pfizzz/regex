@@ -1,5 +1,7 @@
 regex practice
 
+\. = literal dot (NOT meta character)
+
 Meta characters:
 
 \d = 0-9
@@ -23,19 +25,29 @@ Position:
 $ = end
 \b = word boundary 
 
-CHaracter classes:
-[abc] = match an "a" or a "b" or a "c"
+Character classes:
+[abc] = match an "a" OR a "b" OR a "c"
+[-.] = dot becomes a literal dot (no longer meta character in a class).
+
+PHONE NUMBER EXERCISE:
+How to select different phone numbers:
 
 201-555-6789 = \d{3}-\d{3}-\d{4}
-646.555.1234
-(212)867-5309
+646.555.1234 = d{3}[.-]\d{3}[.-]\d{4}
+(212)867-5309 = [(]\d{3}[)][.-]\d{3}[.-]\d{4}
 
+to select all of them at once:
 
-the colors of the rainbow have many colours and the rainbow does not 
-have a single colour. 
-
-searching colou?rs? searches for colo +an optional u +r + an optional s.
-
+\(?\d{3}[-.)]\d{3}[-.]\d{4}
+(the order of the -.) in the class is important)
+\(? = the ( is optional.
+THIS TRANSLATES TO:
+"I would like to match a literal open parenthesis optionally, 
+followed by three digits,
+followed by a dash or a period or a closed parenthesis,
+followed by tree digits,
+followed by a dash or a period,
+followed by four digits."
 
 examples (refer to meta characters and qualifiers)
 \w+ = find one or more word characters in a row
@@ -45,6 +57,15 @@ examples (refer to meta characters and qualifiers)
 ^\w+$ = match beginning of line followed by any sequence of word characters then end of line (single word)
 \b\w{4}\b = beginning of a word, 4 characters, end of word (4-letter word)
 \b\w{4,6}\b = match all words between 4-6 word characters
+l[yi]nk = match l +y or i + nk (using character class yi)
+l[yi (]nk = mat l +y or i or space or ( +nk
+
+
+the colors of the rainbow have many colours and the rainbow does not 
+have a single colour. 
+
+searching colou?rs? searches for colo +an optional u +r + an optional s.
+
 
 This is something
 is about
@@ -55,3 +76,5 @@ sequence of words
 Hello
 Goodbye and
 Go go go rainbow!
+
+The lynk is quite a link you think? l nk link lynk l(nk lyink (will not show)
